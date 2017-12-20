@@ -1,0 +1,260 @@
+<style lang="less" rel="stylesheet/less" scoped="scoped">
+    .Index {
+        @defaultFontColor: #969696;
+        @color: #31a9de;
+        height: 100%;
+        background-color: #ffffff;
+        /*banner*/
+        .Index_banner {
+            img {
+                width: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+        /*滚动广告*/
+        .Index_marquee {
+            display: flex;
+            flex-flow: row nowrap;
+            padding: 0 10px;
+            .icon {
+                flex: 1;
+                margin-right: .5em;
+                i.iconfont {
+                    color: @color;
+                    font-size: 16px;
+                }
+            }
+            .marquee {
+                font-size: 12px;
+                line-height: 25px;
+                color: @defaultFontColor;
+
+                span {
+                    color: @color;
+                }
+            }
+        }
+        /*主要内容(认证过程, 申请按钮)*/
+        .Index_content {
+            background-color: #fbf9fe;
+            /*建议 suggest*/
+            .suggest {
+                padding: 30px 0;
+                color: @defaultFontColor;
+                font-size: 14px;
+                text-align: center;
+                position: relative;
+                &:before {
+                    content: ' ';
+                    height: 1px;
+                    border-bottom: 1px solid #efefef;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                }
+            }
+            /*审核步骤*/
+            .auditSteps {
+
+                .item {
+                    padding: 30px 0;
+                    text-align: center;
+                    line-height: 1em;
+                    i.iconfont {
+                        color: @color;
+                        font-size: 25px;
+                    }
+                    p {
+                        margin-top: 5px;
+                        color: #333;
+                        font-size: 14px;
+                    }
+                    span {
+                        margin-top: 5px;
+                        color: @defaultFontColor;
+                        font-size: 12px;
+                    }
+                }
+                .itemIcon {
+                    i.iconfont {
+                        color: @color;
+                        font-size: 18px;
+                    }
+                }
+            }
+            /*申请借贷/查询进度*/
+            .applyAndQuery {
+                padding: 35px 20px 20px 20px;
+                box-sizing: border-box;
+                background-color: #ffffff;
+                .btns {
+                    text-align: center;
+                    font-size: 16px;
+                    .applyBtn {
+                        padding: 10px;
+                        -webkit-border-radius: 10px 0 0 10px;
+                        -moz-border-radius: 10px 0 0 10px;
+                        border-radius: 10px 0 0 10px;
+                        background-color: #eddb4a;
+                        font-weight: 400;
+                    }
+                    .queryBtn {
+                        padding: 10px;
+                        background-color: @color;
+                        -webkit-border-radius: 0 10px 10px 0;
+                        -moz-border-radius: 0 10px 10px 0;
+                        border-radius: 0 10px 10px 0;
+                        color: #ffffff;
+                        font-weight: 300;
+                    }
+                }
+                .desc {
+                    margin-top: 10px;
+                    font-size: 12px;
+                    color: @defaultFontColor;
+                    text-align: center;
+                    span {
+                        color: @color;
+                    }
+                }
+            }
+        }
+        /*footer*/
+        .Index_footer {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 10px;
+            font-size: 12px;
+            color: @defaultFontColor;
+            text-align: center;
+
+            span {
+                color: @color;
+            }
+        }
+    }
+</style>
+
+<template>
+    <div class="demonUI Index">
+        <!--banner-->
+        <div class="Index_banner">
+            <img src="../assets/indexhd.png"/>
+        </div>
+        <!--滚动广告-->
+        <div class="Index_marquee">
+            <div class="icon">
+                <i class="iconfont icon-tongzhi"></i>
+            </div>
+            <marquee class="marquee">
+                <marquee-item>
+                    用户必读 <span>《使用说明》</span>
+                </marquee-item>
+                <marquee-item>
+                    12月12号即将开启新的一轮贷款提额机会
+                </marquee-item>
+            </marquee>
+        </div>
+        <!--主要内容(建议 -> 认证过程 -> 申请借贷/查询进度)-->
+        <div class="Index_content">
+            <!--建议-->
+            <div class="suggest">
+                认证信息越完善，审核通过率越高额！
+            </div>
+            <!--认证过程-->
+            <flexbox class="auditSteps" :gutter="0">
+                <!--基础认证-->
+                <flexbox-item class="item" @click.native="applyForLoan">
+                    <i class="iconfont icon-credentials_icon"></i>
+                    <p>基础信息</p>
+                    <span>获取基础信息</span>
+                </flexbox-item>
+                <!--图标-->
+                <flexbox-item class="itemIcon" :span="1">
+                    <i class="iconfont icon-tiaozhuandaomulu"></i>
+                </flexbox-item>
+                <!--芝麻认证-->
+                <flexbox-item class="item">
+                    <i class="iconfont icon-zhimaxinyong"></i>
+                    <p>补充信息</p>
+                    <span>获取补充信息</span>
+                </flexbox-item>
+                <!--图标-->
+                <flexbox-item class="itemIcon" :span="1">
+                    <i class="iconfont icon-tiaozhuandaomulu"></i>
+                </flexbox-item>
+                <!--通话认证-->
+                <flexbox-item class="item">
+                    <i class="iconfont icon-tonghuajilu"></i>
+                    <p>第三方认证</p>
+                    <span>获取认证信息</span>
+                </flexbox-item>
+            </flexbox>
+            <!--申请借贷/查询进度-->
+            <div class="applyAndQuery">
+                <flexbox class="btns" :gutter="0">
+                    <flexbox-item class="applyBtn" :span="3/5" @click.native="applyForLoan">申请借贷
+                    </flexbox-item>
+                    <flexbox-item class="queryBtn">查询进度</flexbox-item>
+                </flexbox>
+                <p class="desc">
+                    本次借贷全程由<span>若水平台</span>服务提供
+                </p>
+            </div>
+
+        </div>
+        <div class="Index_footer">
+            本应用技术开发与支持 由<span>《蘑菇信用》</span>提供
+        </div>
+    </div>
+</template>
+
+<script>
+    import {Marquee, MarqueeItem, Flexbox, FlexboxItem, Divider} from 'vux'
+    import UtilMixin from '@/mixins/UtilMixin.vue'
+
+    export default {
+        mixins: [UtilMixin],
+        data() {
+            return {
+                customer_id: null
+
+            }
+        },
+        components: {
+            Marquee,
+            MarqueeItem,
+            Flexbox,
+            FlexboxItem,
+            Divider
+        },
+        computed: {},
+        methods: {
+            applyForLoan() {
+                let _this = this
+                if (this.customer_id) {
+                    this.routerLink('ApplyForLoan')
+                } else {
+                    this.$vux.confirm.show({
+                        title: '提示',
+                        content: '您还没有登录,请先登录!',
+                        onCancel() {},
+                        onConfirm() {
+                            _this.routerLink('Login', {identification: '000'})
+                        }
+                    })
+                }
+            }
+        },
+        created() {
+            this.customer_id = localStorage.getItem('yunhu!customer_id')
+        },
+        mounted() {
+
+        }
+    }
+</script>
+
