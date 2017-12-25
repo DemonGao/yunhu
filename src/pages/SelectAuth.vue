@@ -1,24 +1,13 @@
 <template>
     <div class="selectAuth">
         <grid :cols="4">
-            <grid-item label="学信网" link="https://credit.baiqishi.com/clclient/common/basic?partnerId=yousu&source=chsi">
+            <grid-item
+                v-for="(item, index) in authList" :key="index"
+                :label="item.label"
+                :link="item.link + '&checkway=' + $route.query.checkway"
+            >
                 <div slot="icon" class="icon">
-                    <i class="iconfont icon-xuexinwang"></i>
-                </div>
-            </grid-item>
-            <grid-item label="人行征信" link="https://credit.baiqishi.com/clclient/common/basic?partnerId=yousu&source=rhzx">
-                <div class="icon" slot="icon">
-                    <i class="iconfont icon-renhangzhengxin"></i>
-                </div>
-            </grid-item>
-            <grid-item label="运营商" link="https://credit.baiqishi.com/clclient/common/basic?partnerId=yousu&source=mno">
-                <div class="icon" slot="icon">
-                    <i class="iconfont icon-yunyingshangrenzheng"></i>
-                </div>
-            </grid-item>
-            <grid-item label="脉脉" link="https://credit.baiqishi.com/clclient/common/basic?partnerId=yousu&source=maimai">
-                <div class="icon" slot="icon">
-                    <i class="iconfont icon-mai"></i>
+                    <i :class="['iconfont', item.icon]"></i>
                 </div>
             </grid-item>
         </grid>
@@ -30,16 +19,84 @@
 
     export default {
         data() {
-            return {}
+            return {
+                auths: [
+                    {
+                        id: 'chsi',
+                        label: '学信网',
+                        link: '/h5AuthPage?partnerId=yousu&source=chsi',
+                        icon: 'icon-xuexinwang'
+                    },
+                    {
+                        id: 'rhzx',
+                        label: '人行征信',
+                        link: '/h5AuthPage?partnerId=yousu&source=rhzx',
+                        icon: 'icon-renhangzhengxin'
+                    },
+                    {
+                        id: 'mno',
+                        label: '运营商',
+                        link: '/h5AuthPage?partnerId=yousu&source=mno',
+                        icon: 'icon-yunyingshangrenzheng'
+                    },
+                    {
+                        id: 'maimai',
+                        label: '脉脉',
+                        link: '/h5AuthPage?partnerId=yousu&source=maimai',
+                        icon: 'icon-mai'
+                    },
+                    {
+                        id: 'tb',
+                        label: '淘宝',
+                        link: '/apiTBAuth?',
+                        icon: 'icon-taobao'
+                    },
+                    {
+                        id: 'jd',
+                        label: '京东',
+                        link: '/apiJDAuth?',
+                        icon: 'icon-jingdong'
+                    },
+                    {
+                        id: 'gjj',
+                        label: '公积金',
+                        link: '/apiGJJAuth?',
+                        icon: 'icon-gongjijin'
+                    }
+                ]
+            }
         },
         components: {
             Grid,
             GridItem
         },
-        computed: {},
+        computed: {
+            authList() {
+                const checkway = this.$route.query.checkway.split(',')
+                let authList = []
+                this.auths.map(item => {
+                    if (checkway.includes(item.id)) {
+                        authList.push(item)
+                    }
+                })
+                return authList
+            },
+            checkInfo() {
+                this.$axios.post({
+                    url: '/check_approve_info/',
+                    data: {
+                        customer_id: parseInt(localStorage.getItem('yunhu!customer_id'))
+                    }
+                }).then(res => {
+                    console.log(res)
+                })
+            }
+        },
         methods: {},
-        mounted() {
-        }
+        created() {
+            this.checkInfo()
+        },
+        mounted() {}
     }
 </script>
 

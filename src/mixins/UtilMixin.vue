@@ -118,8 +118,8 @@
                 return time.year + '年' + time.month + '月' + time.day + '日 ' + time.hour + ':' + time.minute
             },
             // 路由跳转
-            routerLink(url, params) {
-                this.$router.push({name: url, params})
+            routerLink(url, params, query = {}) {
+                this.$router.push({name: url, params, query})
             },
             //  去空
             trim(str) {

@@ -26,7 +26,8 @@
                 return new Promise((resolve, reject) => {
                     let params = {}
                     for (let key in this.$refs) {
-                        if (this.$refs[key].currentValue === '') {
+                        console.log(this.$refs[key])
+                        if (this.$refs[key].required && this.$refs[key].currentValue === '') {
                             this.$vux.toast.text('请将信息填写完整', 'top')
                             this.$refs[key].focus()
                             reject({
@@ -56,7 +57,12 @@
                         if (this.type === 0) {
                             params = {
                                 customer_id: parseInt(localStorage.getItem('yunhu!customer_id')),
-                                baseinfo: JSON.stringify(params)
+                                base_info: params
+                            }
+                        } else if (this.type === 1) {
+                            params = {
+                                customer_id: parseInt(localStorage.getItem('yunhu!customer_id')),
+                                supplement_info: params
                             }
                         }
                     }

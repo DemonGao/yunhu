@@ -260,7 +260,7 @@
                 console.log(this[nodelName])
             },
             submit() {
-                this.formMixin_submit('/yunhu/customer_update/')
+                this.formMixin_submit('customer_update/')
                     .then(() => {
                         this.$router.push({name: 'Index'})
                     })

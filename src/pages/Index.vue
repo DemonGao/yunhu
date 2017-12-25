@@ -167,7 +167,7 @@
             <!--认证过程-->
             <flexbox class="auditSteps" :gutter="0">
                 <!--基础认证-->
-                <flexbox-item class="item" @click.native="applyForLoan">
+                <flexbox-item class="item" @click.native="routerLink('ApplyBaseInfo')">
                     <i class="iconfont icon-credentials_icon"></i>
                     <p>基础信息</p>
                     <span>获取基础信息</span>
@@ -177,7 +177,7 @@
                     <i class="iconfont icon-tiaozhuandaomulu"></i>
                 </flexbox-item>
                 <!--芝麻认证-->
-                <flexbox-item class="item">
+                <flexbox-item class="item" @click.native="routerLink('ApplySupplementInfo')">
                     <i class="iconfont icon-zhimaxinyong"></i>
                     <p>补充信息</p>
                     <span>获取补充信息</span>
@@ -187,7 +187,8 @@
                     <i class="iconfont icon-tiaozhuandaomulu"></i>
                 </flexbox-item>
                 <!--通话认证-->
-                <flexbox-item class="item">
+                <flexbox-item class="item"
+                              @click.native="routerLink('SelectAuth', {}, {checkway: $route.query.checkway})">
                     <i class="iconfont icon-tonghuajilu"></i>
                     <p>第三方认证</p>
                     <span>获取认证信息</span>
@@ -218,6 +219,7 @@
 
     export default {
         mixins: [UtilMixin],
+        props: ['identification'],
         data() {
             return {
                 customer_id: null
@@ -236,24 +238,41 @@
             applyForLoan() {
                 let _this = this
                 if (this.customer_id) {
-                    this.routerLink('ApplyForLoan')
+                    this.routerLink('applyBaseInfo')
                 } else {
                     this.$vux.confirm.show({
                         title: '提示',
                         content: '您还没有登录,请先登录!',
-                        onCancel() {},
+                        onCancel() {
+                        },
                         onConfirm() {
                             _this.routerLink('Login', {identification: '000'})
                         }
                     })
                 }
+            },
+            checkApproveInfo() {
+                this.$axios.post({
+                    url: '/check_approve_info'
+                })
+            },
+            checkIdentification() {
+                this.$axios.post({
+                    url: '/check_identification/',
+                    data: {
+                        identification: this.identification
+                    }
+                }).then(res => {
+                    console.log(res)
+                })
             }
         },
         created() {
             this.customer_id = localStorage.getItem('yunhu!customer_id')
         },
         mounted() {
-
+            console.log(this.$route.query.checkway)
+            this.checkIdentification()
         }
     }
 </script>

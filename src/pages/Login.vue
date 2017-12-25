@@ -97,7 +97,7 @@
                     return
                 }
                 this.$axios.post({
-                    url: '/yunhu/telcheck/',
+                    url: 'telcheck/',
                     data: {
                         tel: this.tel
                     }
@@ -110,21 +110,19 @@
                 this.$refs[ref].focus()
             },
             submit() {
-                this.formMixin_submit('/yunhu/h5register/')
+                this.formMixin_submit('h5register/')
                     .then((result) => {
                         localStorage.setItem('yunhu!customer_id', result.customer_id)
                         this.$refs.tel.reset()
                         this.$refs.code.reset()
-                        this.$router.push({name: 'Index'})
+                        this.routerLink('Index', {identification: this.identification})
                     })
                     .catch((err) => {
                         console.log(`code:${err.code} \n msg:${err.msg}`)
                     })
             }
         },
-        mounted() {
-
-        }
+        mounted() {}
     }
 </script>
 

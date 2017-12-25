@@ -20,7 +20,7 @@
                 color: @defaultFontColor;
                 position: relative;
                 .content {
-                    &.add{
+                    &.add {
                         background-color: #ccc;
                     }
                     position: absolute;
@@ -80,28 +80,37 @@
                 name="identity"
                 placeholder="请输入您的身份证号码"
                 :required="true"
-                @on-enter="nextFocus('qq')"
+                @on-enter="nextFocus('zhima_score')"
             ></x-input>
         </group>
-        <group title="QQ号码" :title-color="groupColor" class="dm-input">
+        <group title="芝麻信用分" :title-color="groupColor" class="dm-input">
             <x-input
-                ref="qq"
-                v-model="qq"
-                name="qq"
-                placeholder="请输入您的QQ号码"
+                ref="zhima_score"
+                v-model="zhima_score"
+                name="zhima_score"
+                placeholder="请输入您的芝麻信用分"
                 :required="true"
                 type="number"
-                @on-enter="nextFocus('want_blance')"
+                @on-enter="nextFocus('wechat')"
             ></x-input>
         </group>
-        <group title="借款金额" :title-color="groupColor" class="dm-input">
+        <group title="微信号" :title-color="groupColor" class="dm-input">
             <x-input
-                ref="want_blance"
-                name="want_blance"
-                v-model="want_blance"
-                placeholder="请输入您需要借款的金额"
+                ref="wechat"
+                v-model="wechat"
+                name="wechat"
+                placeholder="请输入您的微信号"
                 :required="true"
-                type="number"
+                @on-enter="nextFocus('address')"
+            ></x-input>
+        </group>
+        <group title="详细地址" :title-color="groupColor" class="dm-input">
+            <x-input
+                ref="address"
+                name="address"
+                v-model="address"
+                placeholder="请输入您的详细地址"
+                :required="true"
             ></x-input>
         </group>
         <!--身份证正面照-->
@@ -232,9 +241,10 @@
                 groupColor: '#50b97b',
                 name: null,
                 tel: null,
-                qq: null,
                 identity: null,
-                want_blance: null,
+                zhima_score: null,
+                wechat: null,
+                address: null,
                 idcard_pic: '',
                 idcard_backpic: '',
                 idcard_people_pic: '',
@@ -260,14 +270,36 @@
                 console.log(this[nodelName])
             },
             submit() {
-                this.formMixin_submit('/yunhu/customer_update/')
+                this.formMixin_submit('/update_base_info/')
                     .then(() => {
-                        this.$router.push({name: 'Index'})
+                        this.$router.go(-1)
                     })
                     .catch((err) => {
                         console.log(`code:${err.code} \n msg:${err.msg}`)
                     })
+            },
+            checkInfo() {
+                this.$axios.post({
+                    url: '/check_base_info/',
+                    data: {
+                        customer_id: parseInt(localStorage.getItem('yunhu!customer_id'))
+                    }
+                }).then(res => {
+                    this.name = res.name
+                    this.tel = res.tel
+                    this.identity = res.identity
+                    this.zhima_score = res.zhima_score
+                    this.wechat = res.wechat
+                    this.address = res.address
+
+                    this.idcard_pic = res.idcard_pic
+                    this.idcard_backpic = res.idcard_backpic
+                    this.idcard_people_pic = res.idcard_people_pic
+                })
             }
+        },
+        created() {
+            this.checkInfo()
         },
         mounted() {
         }

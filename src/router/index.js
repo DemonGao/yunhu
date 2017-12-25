@@ -17,19 +17,28 @@ export default new Router({
         },
         // 主页
         {
-            path: '/',
+            path: '/index/:identification',
             name: 'Index',
             component: (resolve) => require(['@/pages/Index'], resolve),
             meta: {
                 title: '蘑菇信用 - 主页'
+            },
+            props: true
+        },
+        {
+            path: '/applyBaseInfo',
+            name: 'ApplyBaseInfo',
+            component: (resolve) => require(['@/pages/ApplyBaseInfo'], resolve),
+            meta: {
+                title: '蘑菇信用 - 基础信息'
             }
         },
         {
-            path: '/applyForLoan',
-            name: 'ApplyForLoan',
-            component: (resolve) => require(['@/pages/ApplyForLoan'], resolve),
+            path: '/applySupplementInfo',
+            name: 'ApplySupplementInfo',
+            component: (resolve) => require(['@/pages/ApplySupplementInfo'], resolve),
             meta: {
-                title: '蘑菇信用 - 申请借贷'
+                title: '蘑菇信用 - 补充信息'
             }
         },
         {
@@ -37,8 +46,45 @@ export default new Router({
             name: 'SelectAuth',
             component: (resolve) => require(['@/pages/SelectAuth'], resolve),
             meta: {
-                title: '蘑菇信用 - 选择认证'
-            }
+                title: '蘑菇信用 - 第三方认证'
+            },
+            props: true
+        },
+        {
+            path: '/h5AuthPage',
+            name: 'H5AuthPage',
+            component: (resolve) => require(['@/pages/h5AuthPage'], resolve),
+            meta: {
+                title: '蘑菇信用 - **认证'
+            },
+            props: true
+        },
+        {
+            path: '/apiTBAuth',
+            name: 'ApiTBAuth',
+            component: (resolve) => require(['@/pages/ApiTBAuth'], resolve),
+            meta: {
+                title: '蘑菇信用 - 淘宝认证'
+            },
+            props: true
+        },
+        {
+            path: '/apiJDAuth',
+            name: 'ApiJDAuth',
+            component: (resolve) => require(['@/pages/ApiJDAuth'], resolve),
+            meta: {
+                title: '蘑菇信用 - 京东认证'
+            },
+            props: true
+        },
+        {
+            path: '/apiGJJAuth',
+            name: 'ApiGJJAuth',
+            component: (resolve) => require(['@/pages/ApiGJJAuth'], resolve),
+            meta: {
+                title: '蘑菇信用 - 公积金认证'
+            },
+            props: true
         }
     ]
 })
