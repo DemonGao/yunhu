@@ -39,7 +39,7 @@ let _post = ({url, data = {}, tips = false}) => {
     return new Promise((resolve, reject) => {
         axios.post(host + url, data)
             .then(res => {
-                console.log(res.data.resultCode)
+                console.log(res)
                 if (res.data.resultCode === 'CCOM1000') {
                     resolve(res.data.data)
                 } else {

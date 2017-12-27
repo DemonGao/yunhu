@@ -85,6 +85,15 @@ export default new Router({
                 title: '蘑菇信用 - 公积金认证'
             },
             props: true
+        },
+        {
+            path: '/apiGJJAuthNext',
+            name: 'ApiGJJAuthNext',
+            component: (resolve) => require(['@/pages/ApiGJJAuthNext'], resolve),
+            meta: {
+                title: '蘑菇信用 - 公积金认证'
+            },
+            props: true
         }
     ]
 })

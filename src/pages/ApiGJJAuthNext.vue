@@ -60,63 +60,23 @@
 </style>
 <template>
     <div class="demonUI ApplyForLoan">
-        <div style="display: none">
-            <x-input
-                ref="cityCode"
-                name="cityCode"
-                v-model="cityCode"
-                placeholder="cityCode"
-                :required="true"
-            ></x-input>
-            <x-input
-                ref="loginType"
-                name="loginType"
-                v-model="loginType"
-                placeholder="登录类型"
-                :required="true"
-            ></x-input>
-        </div>
-        <group title="姓名" :title-color="groupColor" class="dm-input">
-            <x-input
-                ref="name"
-                name="name"
-                v-model="name"
-                placeholder="请输入您的真实姓名"
-                :required="true"
-            ></x-input>
-        </group>
-        <group title="手机号码" :title-color="groupColor" class="dm-input">
-            <x-input
-                ref="mobile"
-                name="mobile"
-                v-model="mobile"
-                placeholder="请输入您的手机号码"
-                :required="true"
-                type="tel"
-            ></x-input>
-        </group>
-        <group title="身份证号码" :title-color="groupColor" class="dm-input">
-            <x-input
-                ref="certNo"
-                v-model="certNo"
-                name="certNo"
-                placeholder="请输入您的身份证号码"
-                :required="true"
-            ></x-input>
-        </group>
-        <x-address
-            title="你当前所在城市"
-            :list="cityList"
-            placeholder="请选择地址"
-            @on-shadow-change="changeCity"
-        >
-        </x-address>
+        <template v-for="(item, index) in formList">
+            <group
+                :title="item.name"
+                :title-color="groupColor"
+                class="dm-input extraData">
+                <x-input
+                    :ref="item.code"
+                    :name="item.code"
+                    :placeholder="item.des ? item.des :'请填写' + item.name"
+                    :required="true"
+                ></x-input>
+            </group>
+
+        </template>
         <box gap="20px">
-            <x-button type="confirm"
-                      :gradients="['#50b97b', '#19D5FD']"
-                      @click.native="submit()"
-            >
-                下一步
+            <x-button type="confirm" :disabled="submitLoadding"
+                      :gradients="['#50b97b', '#19D5FD']" @click.native="submit(1)"> 提交
             </x-button>
         </box>
     </div>
@@ -127,19 +87,21 @@
 
     import {XInput, Group, XButton, Box, XAddress, Picker} from 'vux'
     import UtilMixin from '@/mixins/UtilMixin.vue'
+    import FormMixin from '@/mixins/FormMixin.vue'
 
     export default {
-        mixins: [UtilMixin],
+        mixins: [UtilMixin, FormMixin],
         data() {
             return {
+                formList: [],
                 groupColor: '#50b97b',
+                reqId: null,
                 partnerId: 'yousu',
-                loginType: null,
-                mobile: null,
-                name: null,
-                certNo: null,
+                smsCode: null,
+                cityList: [],
                 cityCode: null,
-                cityList: []
+                data: null,
+                baseInfo: JSON.parse(this.$route.query.baseInfo)
             }
         },
         components: {
@@ -168,9 +130,19 @@
                 const ISEMPTY = 0
                 const ISNOVALID = 1
                 return new Promise((resolve, reject) => {
-                    let params = {}
+                    let params = Object.assign(this.baseInfo)
+                    let extraData = {}
                     for (let key in this.$refs) {
-                        let ref = this.$refs[key]
+                        let ref = null
+                        if (Array.isArray(this.$refs[key])) {
+                            if (this.$refs[key].length !== 0) {
+                                ref = this.$refs[key][0]
+                            } else {
+                                break
+                            }
+                        } else {
+                            ref = this.$refs[key]
+                        }
                         if (ref.required && !ref.currentValue) {
                             this.$vux.toast.text('请将信息填写完整', 'top')
                             ref.focus()
@@ -191,47 +163,65 @@
                             }
                         }
                         if (ref.name) {
-                            params[ref.name] = ref.currentValue
+                            extraData[ref.name] = ref.currentValue
                         }
+                        params['extraData'] = extraData
+                        params['reqId'] = this.reqId
+                        params['partnerId'] = this.partnerId
                     }
-                    resolve(params)
-                })
-            },
-            submit() {
-                this.formMixin_submit('/bqs_api/')
-                    .then((res) => {
-                        this.$router.push({name: 'ApiGJJAuthNext', query: {baseInfo: JSON.stringify(res)}})
+                    this.$vux.loading.show({
+                        text: '等待中...'
                     })
-            },
-            ajaxCityList() {
-                this.$axios._post({
-                    url: '/bqs_api/',
-                    data: {
-                        url: 'https://credit.baiqishi.com/clweb/api/hfund/supportcity',
-                        data: {
-                            partnerId: this.partnerId
-                        }
+                    this.submitLoadding = true
+                    params = {
+                        url: 'https://credit.baiqishi.com/clweb/api/hfund/login',
+                        data: params
                     }
-                }).then(res => {
-                    this.data = res.cityInfoList
-                    const cityList = res.cityInfoList
-                    let cityData = []
-                    cityList.forEach((item) => {
-                        if (item.status === '0') {
-                            cityData.push({
-                                name: item.cityCodeDesc ? item.cityCodeDesc : item.provinceDesc,
-                                value: item.cityCode
+                    console.log(params)
+                    this.$axios._post({
+                        url: ajaxUrl,
+                        data: params,
+                        tips: true
+                    }).then(result => {
+                        this.$vux.loading.hide()
+                        this.submitLoadding = false
+                        this.$vux.toast.show({
+                            text: '认证成功'
+                        })
+                        resolve(result)
+                    }).catch(err => {
+                        this.submitLoadding = false
+                        this.$vux.loading.hide()
+                        if (err.code === 'CCOM3069') {
+                            this.reqId = err.data.reqId
+                            this.$vux.toast.show({
+                                text: '验证码已发送'
+                            })
+                            resolve(err.data.reqId)
+                        } else {
+                            this.$vux.toast.show({
+                                type: 'cancel',
+                                text: err.msg
+                            })
+                            reject({
+                                code: err.code,
+                                msg: err.msg
                             })
                         }
                     })
-                    this.cityList = cityData
                 })
             },
-            changeCity(ids, names) {
-                console.log(ids)
-                console.log(names)
-                this.cityCode = ids[ids.length - 1]
-                this.ajaxLoginType()
+            submit(type) {
+                this.formMixin_submit('/bqs_api/')
+                    .then((res) => {
+                        console.log(res)
+                        if (type === 1) {
+                            this.$router.push({name: 'SelectAuth', query: {checkway: this.$route.query.checkway}})
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(`code:${err.code} \n msg:${err.msg}`)
+                    })
             },
             ajaxLoginType() {
                 this.$axios._post({
@@ -240,16 +230,17 @@
                         url: 'https://credit.baiqishi.com/clweb/api/hfund/logintype',
                         data: {
                             partnerId: this.partnerId,
-                            cityCode: this.cityCode
+                            cityCode: this.baseInfo.cityCode
                         }
                     }
                 }).then(res => {
-                    this.loginType = res.loginCmdFields[0].loginType
+                    this.formList = res.loginCmdFields[0].loginFields
                 })
             }
         },
         created() {
-            this.ajaxCityList()
+            console.log(this.baseInfo)
+            this.ajaxLoginType()
         },
         mounted() {
         }
