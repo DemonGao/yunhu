@@ -17,7 +17,6 @@
              * */
             // 获取时间（今天，昨天，日期）
             time(val, dealYear = 0, hasTime = 0) {
-                console.log(val)
                 let time = val
                 let nowDate = dateFormat(new Date(), 'YYYY-MM-DD')
                 let nowDateArr = nowDate.split('-')
@@ -26,8 +25,6 @@
                     // 如果年份相同
                     if (parseInt(nowDateArr[1]) === parseInt(DateArr[1])) {
                         // 如果月份相同
-                        console.log(nowDateArr[2])
-                        console.log(DateArr[2])
                         if (parseInt(nowDateArr[2]) === parseInt(DateArr[2])) {
                             // 如果日期相同
                             time = '今天'
@@ -68,14 +65,14 @@
                             // 如果日期相差1天
                             return ['昨天', null, null]
                         }
-                        return [day, null, null]
+                        // return [day, null, null]
                     }
                     return [day, month, null]
                 }
                 return [day, month, year]
             },
             timeAgoHasHourAndMinute(val) {
-                let oldDate = new Date(val)
+                let oldDate = typeof val === 'string' ? new Date(val.replace(/-/g, '/')) : new Date(val)
                 let newDate = new Date()
                 // 时间对象
                 let time = {
@@ -115,7 +112,8 @@
                     }
                     return time.month + '月' + time.day + '日 ' + time.hour + ':' + time.minute
                 }
-                return time.year + '年' + time.month + '月' + time.day + '日 ' + time.hour + ':' + time.minute
+//                return time.year + '年' + time.month + '月' + time.day + '日 ' + time.hour + ':' + time.minute
+                return time.year + '年' + time.month + '月' + time.day + '日 '
             },
             // 路由跳转
             routerLink(url, params, query = {}) {
