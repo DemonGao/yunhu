@@ -55,7 +55,17 @@
                     placeholder="请填写验证码"
                     :required="true"
                 ></x-input>
-                <span class="sendCode" @click="sendCode">发送验证码</span>
+                <span class="sendCode" @click="sendCode">
+                    发送验证码
+                    <template v-if="codeTime!==0">
+                        (<countdown
+                        v-model="codeTime"
+                        @on-finish="codeTime=0"
+                        v-show="codeTime!==0"
+                    ></countdown>)
+                    </template>
+
+                </span>
             </group>
             <box gap="50px 0 0">
                 <x-button type="confirm" :disabled="submitLoadding" :show-loading="submitLoadding"
@@ -68,7 +78,7 @@
 </template>
 
 <script>
-    import {XInput, Group, XButton, Box} from 'vux'
+    import {XInput, Group, XButton, Box, Countdown} from 'vux'
     import UtilMixin from '@/mixins/UtilMixin.vue'
     import FormMixin from '@/mixins/FormMixin.vue'
 
@@ -80,29 +90,41 @@
                 // 用户名
                 tel: '',
                 // 密码
-                code: ''
+                code: '',
+                // 发送验证码等待时间
+                codeTime: 0
             }
         },
         components: {
             XInput,
             Group,
             XButton,
-            Box
+            Box,
+            Countdown
         },
         computed: {},
         methods: {
             sendCode() {
+                if (this.codeTime !== 0) {
+                    this.$vux.toast.text(`还有${this.codeTime}秒才能再次发送验证码!`)
+                    return
+                }
                 if (this.trim(this.tel) === '') {
                     this.$vux.toast.text('手机号码不能为空')
                     return
                 }
                 this.$axios.post({
-                    url: 'telcheck/',
+                    url: '/telcheck/',
                     data: {
                         tel: this.tel
-                    }
+                    },
+                    isloadding: true
                 }).then(res => {
-                    console.log(res)
+                    this.$vux.toast.show({
+                        text: '短信已发送',
+                        time: 500
+                    })
+                    this.codeTime = 60
                 })
             },
             // 调到下一个input
@@ -110,19 +132,25 @@
                 this.$refs[ref].focus()
             },
             submit() {
-                this.formMixin_submit('h5register/')
+                this.formMixin_submit('/h5register/')
                     .then((result) => {
                         localStorage.setItem('yunhu!customer_id', result.customer_id)
-                        this.$refs.tel.reset()
-                        this.$refs.code.reset()
-                        this.routerLink('Index', {identification: this.identification})
+                        const _this = this
+                        this.$vux.toast.show({
+                            text: '登陆成功',
+                            time: 500,
+                            onHide() {
+                                _this.routerLink('Index', {identification: _this.identification}, {checkway: _this.$route.query.checkway})
+                            }
+                        })
                     })
                     .catch((err) => {
                         console.log(`code:${err.code} \n msg:${err.msg}`)
                     })
             }
         },
-        mounted() {}
+        mounted() {
+        }
     }
 </script>
 

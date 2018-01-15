@@ -164,11 +164,11 @@
                 groupColor: '#50b97b',
                 reqId: null,
                 partnerId: 'yousu',
-                name: '李志修',
-                mobile: 15563886389,
-                certNo: '370285199308050418',
-                userName: '18363857597',
-                pwd: 'qwas12',
+                name: null,
+                mobile: null,
+                certNo: null,
+                userName: null,
+                pwd: null,
                 smsCode: null
             }
         },

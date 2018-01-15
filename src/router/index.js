@@ -55,7 +55,7 @@ export default new Router({
             name: 'H5AuthPage',
             component: (resolve) => require(['@/pages/h5AuthPage'], resolve),
             meta: {
-                title: '蘑菇信用 - **认证'
+                title: '蘑菇信用 - '
             },
             props: true
         },

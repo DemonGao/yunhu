@@ -153,9 +153,9 @@
                 <marquee-item>
                     用户必读 <span>《使用说明》</span>
                 </marquee-item>
-                <marquee-item>
-                    12月12号即将开启新的一轮贷款提额机会
-                </marquee-item>
+                <!--<marquee-item>-->
+                    <!--12月12号即将开启新的一轮贷款提额机会-->
+                <!--</marquee-item>-->
             </marquee>
         </div>
         <!--主要内容(建议 -> 认证过程 -> 申请借贷/查询进度)-->
@@ -167,7 +167,7 @@
             <!--认证过程-->
             <flexbox class="auditSteps" :gutter="0">
                 <!--基础认证-->
-                <flexbox-item class="item" @click.native="routerLink('ApplyBaseInfo')">
+                <flexbox-item class="item" @click.native="routerLink('ApplyBaseInfo', {}, {checkway: $route.query.checkway})">
                     <i class="iconfont icon-credentials_icon"></i>
                     <p>基础信息</p>
                     <span>获取基础信息</span>
@@ -177,7 +177,7 @@
                     <i class="iconfont icon-tiaozhuandaomulu"></i>
                 </flexbox-item>
                 <!--芝麻认证-->
-                <flexbox-item class="item" @click.native="routerLink('ApplySupplementInfo')">
+                <flexbox-item class="item" @click.native="routerLink('ApplySupplementInfo', {}, {checkway: $route.query.checkway})">
                     <i class="iconfont icon-zhimaxinyong"></i>
                     <p>补充信息</p>
                     <span>获取补充信息</span>
@@ -238,7 +238,7 @@
             applyForLoan() {
                 let _this = this
                 if (this.customer_id) {
-                    this.routerLink('applyBaseInfo')
+                    _this.routerLink('ApplyBaseInfo', {}, {checkway: this.$route.query.checkway})
                 } else {
                     this.$vux.confirm.show({
                         title: '提示',
@@ -246,7 +246,7 @@
                         onCancel() {
                         },
                         onConfirm() {
-                            _this.routerLink('Login', {identification: '000'})
+                            _this.routerLink('Login', {identification: this.identification}, {checkway: this.$route.query.checkway})
                         }
                     })
                 }
@@ -260,7 +260,7 @@
                 this.$axios.post({
                     url: '/check_identification/',
                     data: {
-                        identification: this.identification
+                        identification: this.$route.params.identification
                     }
                 }).then(res => {
                     console.log(res)
@@ -271,7 +271,7 @@
             this.customer_id = localStorage.getItem('yunhu!customer_id')
         },
         mounted() {
-            console.log(this.$route.query.checkway)
+            console.log(this.identification)
             this.checkIdentification()
         }
     }

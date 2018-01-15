@@ -1,17 +1,27 @@
+import Vue from 'vue'
+import Vuex from 'vuex'
 import axios from 'axios'
 import jsonp from 'jsonp'
+
+Vue.use(Vuex)
 
 axios.defaults.baseURL = ''
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.timeout = 1500000
 
-const host = 'http://47.94.133.188:8080/yunhu'
+const host = '/yunhu'
 
-let post = ({url, data = {}, tips = false}) => {
+let post = ({url, data = {}, tips = false, isloadding = false}) => {
     return new Promise((resolve, reject) => {
+        if (isloadding) {
+            Vue.$vux.loading.show({
+                text: ''
+            })
+        }
         axios.post(host + url, data)
             .then(res => {
+                isloadding && Vue.$vux.loading.hide()
                 if (res.data.code === 'SUCCESS') {
                     resolve(res.data.body)
                 } else {
@@ -28,8 +38,12 @@ let post = ({url, data = {}, tips = false}) => {
                 }
             })
             .catch(err => {
-                console.error('请求异常')
-                reject(err, '请求异常')
+                Vue.$vux.toast.show({
+                    type: 'cancel',
+                    text: '请求超时'
+                })
+                isloadding && Vue.$vux.loading.hide()
+                reject(err, '请求超时')
             })
     })
 }

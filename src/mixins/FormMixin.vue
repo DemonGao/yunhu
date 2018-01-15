@@ -26,7 +26,6 @@
                 return new Promise((resolve, reject) => {
                     let params = {}
                     for (let key in this.$refs) {
-                        console.log(this.$refs[key])
                         if (this.$refs[key].required && this.$refs[key].currentValue === '') {
                             this.$vux.toast.text('请将信息填写完整', 'top')
                             this.$refs[key].focus()
@@ -71,9 +70,9 @@
                         data: params
                     }).then(result => {
                         this.submitLoadding = false
-                        this.$vux.toast.show({
-                            text: '填写成功'
-                        })
+//                        this.$vux.toast.show({
+//                            text: '填写成功'
+//                        })
                         resolve(result)
                     }).catch(err => {
                         console.log(err)

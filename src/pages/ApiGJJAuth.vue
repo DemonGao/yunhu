@@ -200,7 +200,10 @@
             submit() {
                 this.formMixin_submit('/bqs_api/')
                     .then((res) => {
-                        this.$router.push({name: 'ApiGJJAuthNext', query: {baseInfo: JSON.stringify(res)}})
+                        this.$router.push({
+                            name: 'ApiGJJAuthNext',
+                            query: {baseInfo: JSON.stringify(res), checkway: this.$route.query.checkway}
+                        })
                     })
             },
             ajaxCityList() {

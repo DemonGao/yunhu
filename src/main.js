@@ -23,7 +23,11 @@ Vue.use(ConfirmPlugin)
 Vue.prototype.$axios = axiosUtil
 
 router.beforeEach((to, from, next) => {
-    window.document.title = to.meta.title
+    if (to.name === 'H5AuthPage') {
+        window.document.title = to.meta.title + to.query.title + '认证'
+    } else {
+        window.document.title = to.meta.title
+    }
     next()
 })
 

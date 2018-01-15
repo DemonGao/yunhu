@@ -52,7 +52,7 @@
 </style>
 <template>
     <div class="demonUI ApplyForLoan">
-        <group title="姓名" :title-color="groupColor" class="dm-input">
+        <group title="<span style='color:red'>*</span> 姓名" :title-color="groupColor" class="dm-input">
             <x-input
                 ref="name"
                 name="name"
@@ -62,7 +62,7 @@
                 @on-enter="nextFocus('tel')"
             ></x-input>
         </group>
-        <group title="手机号码" :title-color="groupColor" class="dm-input">
+        <group title="<span style='color:red'>*</span> 手机号码" :title-color="groupColor" class="dm-input">
             <x-input
                 ref="tel"
                 name="tel"
@@ -73,7 +73,7 @@
                 @on-enter="nextFocus('identity')"
             ></x-input>
         </group>
-        <group title="身份证号码" :title-color="groupColor" class="dm-input">
+        <group title="<span style='color:red'>*</span> 身份证号码" :title-color="groupColor" class="dm-input">
             <x-input
                 ref="identity"
                 v-model="identity"
@@ -83,7 +83,7 @@
                 @on-enter="nextFocus('zhima_score')"
             ></x-input>
         </group>
-        <group title="芝麻信用分" :title-color="groupColor" class="dm-input">
+        <group title="<span style='color:red'>*</span> 芝麻信用分" :title-color="groupColor" class="dm-input">
             <x-input
                 ref="zhima_score"
                 v-model="zhima_score"
@@ -94,7 +94,7 @@
                 @on-enter="nextFocus('wechat')"
             ></x-input>
         </group>
-        <group title="微信号" :title-color="groupColor" class="dm-input">
+        <group title="<span style='color:red'>*</span> 微信号" :title-color="groupColor" class="dm-input">
             <x-input
                 ref="wechat"
                 v-model="wechat"
@@ -104,7 +104,7 @@
                 @on-enter="nextFocus('address')"
             ></x-input>
         </group>
-        <group title="详细地址" :title-color="groupColor" class="dm-input">
+        <group title="<span style='color:red'>*</span> 详细地址" :title-color="groupColor" class="dm-input">
             <x-input
                 ref="address"
                 name="address"
@@ -114,7 +114,8 @@
             ></x-input>
         </group>
         <!--身份证正面照-->
-        <group title="<i class='iconfont icon-credentials_icon'> 请上传清晰可见的身份证正面照" :title-color="groupColor"
+        <group title="<span style='color:red'>*</span> <i class='iconfont icon-credentials_icon'> 请上传清晰可见的身份证正面照"
+               :title-color="groupColor"
                class="dm-input">
             <x-input
                 style="display: none"
@@ -144,12 +145,13 @@
                 </div>
                 <div class="item"></div>
                 <div class="item">
-                    <div class="content">示例照片</div>
+                    <div class="content"></div>
                 </div>
             </div>
         </group>
         <!--身份证反面照-->
-        <group title="<i class='iconfont icon-credentials_icon'> 请上传清晰可见的身份证反面照" :title-color="groupColor"
+        <group title="<span style='color:red'>*</span> <i class='iconfont icon-credentials_icon'> 请上传清晰可见的身份证反面照"
+               :title-color="groupColor"
                class="dm-input">
             <x-input
                 style="display: none"
@@ -179,12 +181,13 @@
                 </div>
                 <div class="item"></div>
                 <div class="item">
-                    <div class="content">示例照片</div>
+                    <div class="content"></div>
                 </div>
             </div>
         </group>
         <!--手持身份证照-->
-        <group title="<i class='iconfont icon-credentials_icon'> 请上传清晰可见的身份证反面照" :title-color="groupColor"
+        <group title="<span style='color:red'>*</span> <i class='iconfont icon-credentials_icon'> 请上传清晰可见的身份证反面照"
+               :title-color="groupColor"
                class="dm-input">
             <x-input
                 style="display: none"
@@ -214,7 +217,7 @@
                 </div>
                 <div class="item"></div>
                 <div class="item">
-                    <div class="content">示例照片</div>
+                    <div class="content"></div>
                 </div>
             </div>
         </group>
@@ -272,7 +275,14 @@
             submit() {
                 this.formMixin_submit('/update_base_info/')
                     .then(() => {
-                        this.$router.go(-1)
+                        const _this = this
+                        this.$vux.toast.show({
+                            text: '提交成功',
+                            time: 500,
+                            onHide () {
+                                _this.routerLink('ApplySupplementInfo', {}, {checkway: _this.$route.query.checkway})
+                            }
+                        })
                     })
                     .catch((err) => {
                         console.log(`code:${err.code} \n msg:${err.msg}`)

@@ -185,7 +185,7 @@
         </group>
 
         <!--芝麻信用分-->
-        <group title="<i class='iconfont icon-credentials_icon'> 请上传清晰可见的支付宝芝麻信用分数页"
+        <group title="<span style='color:red'>*</span> <i class='iconfont icon-credentials_icon'> 请上传清晰可见的支付宝芝麻信用分数页"
                :title-color="groupColor"
                class="dm-input">
             <x-input
@@ -216,12 +216,12 @@
                 </div>
                 <div class="item"></div>
                 <div class="item">
-                    <div class="content">示例照片</div>
+                    <div class="content"></div>
                 </div>
             </div>
         </group>
         <!--支付宝信用管理页-->
-        <group title="<i class='iconfont icon-credentials_icon'> 请上传清晰可见的支付宝信用管理页(支付宝 - 我的 - 芝麻信用 - 信用管理)"
+        <group title="<span style='color:red'>*</span> <i class='iconfont icon-credentials_icon'> 请上传清晰可见的支付宝信用管理页(支付宝 - 我的 - 芝麻信用 - 信用管理)"
                :title-color="groupColor"
                class="dm-input">
             <x-input
@@ -252,7 +252,7 @@
                 </div>
                 <div class="item"></div>
                 <div class="item">
-                    <div class="content">示例照片</div>
+                    <div class="content"></div>
                 </div>
             </div>
         </group>
@@ -315,8 +315,15 @@
             },
             submit() {
                 this.formMixin_submit('/update_supplement_info/')
-                    .then(() => {
-                        this.$router.push(-1)
+                    .then((res) => {
+                        const _this = this
+                        this.$vux.toast.show({
+                            text: '提交成功',
+                            time: 500,
+                            onHide () {
+                                _this.routerLink('SelectAuth', {}, {checkway: _this.$route.query.checkway})
+                            }
+                        })
                     })
                     .catch((err) => {
                         console.log(`code:${err.code} \n msg:${err.msg}`)
