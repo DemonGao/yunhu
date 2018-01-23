@@ -29,8 +29,13 @@
                     border-radius: 0 5px 5px 0;
                 }
             }
+            .termagreement{
+                margin-top: 10px;
+                color: #ffffff;
+            }
         }
     }
+
 </style>
 <template>
     <div class="demonUI">
@@ -67,7 +72,15 @@
 
                 </span>
             </group>
-            <box gap="50px 0 0">
+            <div class="termagreement">
+                <check-icon :value.sync="clause" type="plain">
+                    <span style="color: #ffffff;">test</span>
+                </check-icon>
+                <check-icon :value.sync="protocol" type="plain">
+                    <span style="color: #ffffff;">test</span>
+                </check-icon>
+            </div>
+            <box gap="30px 0 0">
                 <x-button type="confirm" :disabled="submitLoadding" :show-loading="submitLoadding"
                           :gradients="['#1D62F0', '#19D5FD']" @click.native="submit"> 登录
                 </x-button>
@@ -78,7 +91,7 @@
 </template>
 
 <script>
-    import {XInput, Group, XButton, Box, Countdown} from 'vux'
+    import {XInput, Group, XButton, Box, Countdown, CheckIcon} from 'vux'
     import UtilMixin from '@/mixins/UtilMixin.vue'
     import FormMixin from '@/mixins/FormMixin.vue'
 
@@ -92,7 +105,9 @@
                 // 密码
                 code: '',
                 // 发送验证码等待时间
-                codeTime: 0
+                codeTime: 0,
+                clause: false,
+                protocol: false
             }
         },
         components: {
@@ -100,7 +115,8 @@
             Group,
             XButton,
             Box,
-            Countdown
+            Countdown,
+            CheckIcon
         },
         computed: {},
         methods: {
