@@ -11,7 +11,7 @@ export default new Router({
             name: 'Login',
             component: (resolve) => require(['@/pages/Login'], resolve),
             meta: {
-                title: '蘑菇信用 - 登录'
+                title: '登录'
             },
             props: true
         },
@@ -21,7 +21,7 @@ export default new Router({
             name: 'Index',
             component: (resolve) => require(['@/pages/Index'], resolve),
             meta: {
-                title: '蘑菇信用 - 主页'
+                title: '主页'
             },
             props: true
         },
@@ -30,7 +30,7 @@ export default new Router({
             name: 'ApplyBaseInfo',
             component: (resolve) => require(['@/pages/ApplyBaseInfo'], resolve),
             meta: {
-                title: '蘑菇信用 - 基础信息'
+                title: '基础信息'
             }
         },
         {
@@ -38,7 +38,7 @@ export default new Router({
             name: 'ApplySupplementInfo',
             component: (resolve) => require(['@/pages/ApplySupplementInfo'], resolve),
             meta: {
-                title: '蘑菇信用 - 补充信息'
+                title: '补充信息'
             }
         },
         {
@@ -46,7 +46,7 @@ export default new Router({
             name: 'SelectAuth',
             component: (resolve) => require(['@/pages/SelectAuth'], resolve),
             meta: {
-                title: '蘑菇信用 - 第三方认证'
+                title: '第三方认证'
             },
             props: true
         },
@@ -55,7 +55,7 @@ export default new Router({
             name: 'H5AuthPage',
             component: (resolve) => require(['@/pages/h5AuthPage'], resolve),
             meta: {
-                title: '蘑菇信用 - '
+                title: ''
             },
             props: true
         },
@@ -64,7 +64,7 @@ export default new Router({
             name: 'ApiTBAuth',
             component: (resolve) => require(['@/pages/ApiTBAuth'], resolve),
             meta: {
-                title: '蘑菇信用 - 淘宝认证'
+                title: '淘宝认证'
             },
             props: true
         },
@@ -73,7 +73,7 @@ export default new Router({
             name: 'ApiJDAuth',
             component: (resolve) => require(['@/pages/ApiJDAuth'], resolve),
             meta: {
-                title: '蘑菇信用 - 京东认证'
+                title: '京东认证'
             },
             props: true
         },
@@ -82,7 +82,7 @@ export default new Router({
             name: 'ApiGJJAuth',
             component: (resolve) => require(['@/pages/ApiGJJAuth'], resolve),
             meta: {
-                title: '蘑菇信用 - 公积金认证'
+                title: '公积金认证'
             },
             props: true
         },
@@ -91,7 +91,25 @@ export default new Router({
             name: 'ApiGJJAuthNext',
             component: (resolve) => require(['@/pages/ApiGJJAuthNext'], resolve),
             meta: {
-                title: '蘑菇信用 - 公积金认证'
+                title: '公积金认证'
+            },
+            props: true
+        },
+        {
+            path: '/clause',
+            name: 'Clause',
+            component: (resolve) => require(['@/pages/Clause'], resolve),
+            meta: {
+                title: '隐私条款'
+            },
+            props: true
+        },
+        {
+            path: '/protocol',
+            name: 'Protocol',
+            component: (resolve) => require(['@/pages/Protocol'], resolve),
+            meta: {
+                title: '优速金融协议'
             },
             props: true
         }

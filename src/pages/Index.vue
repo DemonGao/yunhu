@@ -6,9 +6,11 @@
         background-color: #ffffff;
         /*banner*/
         .Index_banner {
+            height: 30vh;
+            line-height: 0;
             img {
                 width: 100%;
-                width: 100%;
+                height: 100%;
                 object-fit: cover;
             }
         }
@@ -151,10 +153,13 @@
             </div>
             <marquee class="marquee">
                 <marquee-item>
-                    用户必读 <span>《使用说明》</span>
+                    用户必读
+                    <router-link :to="{name: 'Clause'}" tag="span" style="font-weight: 300;">《隐私条款》</router-link>
+                    和
+                    <router-link :to="{name: 'Protocol'}" tag="span" style="font-weight: 300;">《优速金融协议》</router-link>
                 </marquee-item>
                 <!--<marquee-item>-->
-                    <!--12月12号即将开启新的一轮贷款提额机会-->
+                    <!--用户必知 <span>《隐私协议》</span>-->
                 <!--</marquee-item>-->
             </marquee>
         </div>
@@ -202,13 +207,13 @@
                     <flexbox-item class="queryBtn">查询进度</flexbox-item>
                 </flexbox>
                 <p class="desc">
-                    本次借贷全程由<span>若水平台</span>服务提供
+                    本次借贷全程由<span>{{compnay_name}}</span>服务提供
                 </p>
             </div>
 
         </div>
         <div class="Index_footer">
-            本应用技术开发与支持 由<span>《蘑菇信用》</span>提供
+            本应用技术开发与支持 由<span>《云狐科技》</span>提供
         </div>
     </div>
 </template>
@@ -222,8 +227,9 @@
         props: ['identification'],
         data() {
             return {
-                customer_id: null
-
+                customer_id: null,
+                bg: window.COMPANY_IMG2,
+                compnay_name: window.COMPANY_NAME
             }
         },
         components: {
@@ -271,7 +277,6 @@
             this.customer_id = localStorage.getItem('yunhu!customer_id')
         },
         mounted() {
-            console.log(this.identification)
             this.checkIdentification()
         }
     }

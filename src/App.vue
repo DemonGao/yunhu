@@ -6,7 +6,19 @@
 
 <script>
     export default {
-        name: 'app'
+        name: 'app',
+        methods: {
+            checkIdentification() {
+                this.$axios.post({
+                    url: '/check_identification/',
+                    data: {
+                        identification: this.$route.params.identification
+                    }
+                }).then(res => {
+                    console.log(res)
+                })
+            }
+        }
     }
 </script>
 

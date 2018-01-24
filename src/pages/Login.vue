@@ -3,7 +3,6 @@
         position: relative;
         width: 100%;
         height: 100%;
-        background-image: url("../assets/loginbg.jpg");
         background-repeat: no-repeat;
         background-size: cover;
         .Login {
@@ -29,16 +28,19 @@
                     border-radius: 0 5px 5px 0;
                 }
             }
-            .termagreement{
+            .termagreement {
                 margin-top: 10px;
                 color: #ffffff;
+                display: flex;
+                flex-flow: row nowrap;
+                justify-content: space-between;
             }
         }
     }
 
 </style>
 <template>
-    <div class="demonUI">
+    <div class="demonUI" :style="{backgroundImage: 'url(\''+bg+'\')'}">
         <div class="Login">
             <group class="dm-input dm-input-placeholder-white">
                 <x-input
@@ -73,12 +75,12 @@
                 </span>
             </group>
             <div class="termagreement">
-                <check-icon :value.sync="clause" type="plain">
-                    <span style="color: #ffffff;">test</span>
-                </check-icon>
-                <check-icon :value.sync="protocol" type="plain">
-                    <span style="color: #ffffff;">test</span>
-                </check-icon>
+                <div>
+                    <check-icon :value.sync="clause" type="plain"></check-icon>
+                    <router-link :to="{name: 'Clause'}" tag="span" style="color: #f2f2f2;font-weight: 300;">隐私条款</router-link>
+                </div>
+                <check-icon :value.sync="protocol" type="plain"></check-icon>
+                <router-link :to="{name: 'Protocol'}" tag="span" style="color: #f2f2f2;font-weight: 300;">优速金融协议</router-link>
             </div>
             <box gap="30px 0 0">
                 <x-button type="confirm" :disabled="submitLoadding" :show-loading="submitLoadding"
@@ -100,6 +102,7 @@
         props: ['identification'],
         data() {
             return {
+                bg: window.COMPANY_IMG1,
                 // 用户名
                 tel: '',
                 // 密码
@@ -148,6 +151,14 @@
                 this.$refs[ref].focus()
             },
             submit() {
+                if (!this.clause) {
+                    this.$vux.toast.text('您未同意隐私条款', 'center')
+                    return
+                }
+                if (!this.protocol) {
+                    this.$vux.toast.text('您未同意优速金融协议', 'center')
+                    return
+                }
                 this.formMixin_submit('/h5register/')
                     .then((result) => {
                         localStorage.setItem('yunhu!customer_id', result.customer_id)
