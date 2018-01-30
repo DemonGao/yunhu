@@ -144,7 +144,7 @@
     <div class="demonUI Index">
         <!--banner-->
         <div class="Index_banner">
-            <img src="../assets/indexhd.png"/>
+            <img :src="bg"/>
         </div>
         <!--滚动广告-->
         <div class="Index_marquee">
