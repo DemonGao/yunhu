@@ -28,17 +28,25 @@
                     right: 5px;
                     top: 5px;
                     bottom: 5px;
-                    font-size: 12px;
-
-                    text-align: center;
-                    display: flex;
-                    flex-flow: nowrap column;
-                    justify-content: space-around;
-                    span {
+                    label{
+                        display: inline-block;
+                        width: 100%;
+                        height: 100%;
                         font-size: 12px;
-                    }
-                    i.iconfont {
-                        font-size: 25px;
+                        overflow: hidden;
+                        text-align: center;
+                        display: flex;
+                        flex-flow: nowrap column;
+                        justify-content: center;
+                        p{
+                            pointer-events:none;
+                        }
+                        span {
+                            font-size: 12px;
+                        }
+                        i.iconfont {
+                            font-size: 25px;
+                        }
                     }
                     img {
                         width: 100%;
@@ -221,7 +229,7 @@
                 </div>
             </div>
         </group>
-        <box gap="20px">
+        <box style="padding: 20px;">
             <x-button type="confirm" :disabled="submitLoadding" :show-loading="submitLoadding"
                       :gradients="['#50b97b', '#19D5FD']" @click.native="submit"> 下一步
             </x-button>
@@ -266,11 +274,13 @@
         computed: {},
         methods: {
             changeImg(data, nodelName) {
-                console.log(nodelName)
                 if (nodelName !== 'undefined') {
                     this[nodelName] = data
+                    this.$vux.toast.show({
+                        text: '上传成功',
+                        time: 500
+                    })
                 }
-                console.log(this[nodelName])
             },
             submit() {
                 this.formMixin_submit('/update_base_info/')

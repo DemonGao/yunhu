@@ -28,17 +28,25 @@
                     right: 5px;
                     top: 5px;
                     bottom: 5px;
-                    font-size: 12px;
-
-                    text-align: center;
-                    display: flex;
-                    flex-flow: nowrap column;
-                    justify-content: space-around;
-                    span {
+                    label{
+                        display: inline-block;
+                        width: 100%;
+                        height: 100%;
                         font-size: 12px;
-                    }
-                    i.iconfont {
-                        font-size: 25px;
+                        overflow: hidden;
+                        text-align: center;
+                        display: flex;
+                        flex-flow: nowrap column;
+                        justify-content: center;
+                        p{
+                            pointer-events:none;
+                        }
+                        span {
+                            font-size: 12px;
+                        }
+                        i.iconfont {
+                            font-size: 25px;
+                        }
                     }
                     img {
                         width: 100%;
