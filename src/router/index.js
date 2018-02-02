@@ -7,6 +7,10 @@ export default new Router({
     routes: [
         // 登录页面
         {
+            path: '/',
+            component: (resolve) => require(['@/pages/DefaultPage'], resolve)
+        },
+        {
             path: '/login/:identification',
             name: 'Login',
             component: (resolve) => require(['@/pages/Login'], resolve),

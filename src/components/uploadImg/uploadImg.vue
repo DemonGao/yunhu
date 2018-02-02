@@ -76,7 +76,9 @@
                                 }
                                 base64 = canvas.toDataURL('image/jpeg', 0.8)
                                 if (fileList[i].size / 1024000 > 1) {
+                                    alert(fileList[i].size / 1024000)
                                     _this.imgScale(base64, 4)
+                                    _this.$emit('changeImg', base64, _this.modelName)
                                 } else {
                                     _this.$emit('changeImg', base64, _this.modelName)
                                 }
