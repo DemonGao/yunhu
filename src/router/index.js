@@ -112,6 +112,15 @@ export default new Router({
                 title: '优速金融协议'
             },
             props: true
+        },
+        {
+            path: '/contactUs',
+            name: 'ContactUs',
+            component: (resolve) => require(['@/pages/ContactUs'], resolve),
+            meta: {
+                title: '联系客服'
+            },
+            props: true
         }
     ]
 })
