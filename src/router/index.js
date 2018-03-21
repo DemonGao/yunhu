@@ -15,16 +15,41 @@ export default new Router({
             },
             props: true
         },
-        // 主页
         {
-            path: '/index/:identification',
-            name: 'Index',
-            component: (resolve) => require(['@/pages/Index'], resolve),
-            meta: {
-                title: '主页'
-            },
-            props: true
+            path: '/index',
+            name: 'Home',
+            component: (resolve) => require(['@/pages/Home'], resolve),
+            children: [
+                {
+                    path: 'drcr/:identification',
+                    name: 'Index',
+                    component: (resolve) => require(['@/pages/Index'], resolve),
+                    meta: {
+                        title: '主页'
+                    },
+                    props: true
+                },
+                {
+                    path: 'contactUs',
+                    name: 'ContactUs',
+                    component: (resolve) => require(['@/pages/ContactUs'], resolve),
+                    meta: {
+                        title: '联系客服'
+                    },
+                    props: true
+                }
+            ]
         },
+        // 主页
+        // {
+        //     path: '/index/:identification',
+        //     name: 'Index',
+        //     component: (resolve) => require(['@/pages/Index'], resolve),
+        //     meta: {
+        //         title: '主页'
+        //     },
+        //     props: true
+        // },
         {
             path: '/applyBaseInfo',
             name: 'ApplyBaseInfo',
