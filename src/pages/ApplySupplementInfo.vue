@@ -238,7 +238,7 @@
                 name="zfb_manage_pic"
                 v-model="zfb_manage_pic"
                 :required="true"
-                placeholder="请上传清晰可见的身份证反面照"
+                placeholder="请上传清晰可见的支付宝信用管理页(支付宝 - 我的 - 芝麻信用 - 信用管理)"
             ></x-input>
             <div class="uploadImg">
                 <div class="item">

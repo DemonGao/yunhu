@@ -45,6 +45,8 @@
                         active_icon: 'icon-zhuye',
                         link: {
                             name: 'Index',
+                            params: this.$route.params,
+                            query: this.$route.query,
                             replace: true
                         }
                     },

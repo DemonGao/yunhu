@@ -183,7 +183,7 @@
             </div>
         </group>
         <!--手持身份证照-->
-        <group title="<i class='iconfont icon-credentials_icon'> 请上传清晰可见的身份证反面照" :title-color="groupColor"
+        <group title="<i class='iconfont icon-credentials_icon'> 请上传清晰可见的手持身份证照" :title-color="groupColor"
                class="dm-input">
             <x-input
                 style="display: none"
@@ -191,7 +191,7 @@
                 name="idcard_people_pic"
                 v-model="idcard_people_pic"
                 :required="true"
-                placeholder="请上传清晰可见的身份证反面照"
+                placeholder="请上传清晰可见的手持身份证照"
             ></x-input>
             <div class="uploadImg">
                 <div class="item">
