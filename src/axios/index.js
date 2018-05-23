@@ -11,7 +11,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.timeout = 1500000
 
 // const host = '/yunhu'
-const host = 'http://www.yunhushuju.com/yunhu'
+const host = 'http://sms.yunhushuju.com/yunhu'
 
 
 let post = ({url, data = {}, tips = false, isloadding = false}) => {
