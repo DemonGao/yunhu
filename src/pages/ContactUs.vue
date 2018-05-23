@@ -58,7 +58,7 @@
                     font-weight: 300;
                     color: #999999;
                     img{
-                        height: 150px;
+                        height: 250px;
                     }
                 }
                 .box__content__tips{
@@ -79,7 +79,7 @@
             <div class="box__content">
                 <div class="box__content__title">QQ在线客服</div>
                 <div class="box__content__number">
-                    <div>1239300678</div>
+                    <div>598065453</div>
                     <div>
                         <a href="http://wpa.qq.com/msgrd?v=3&uin=1239300678&site=qq&menu=yes">点此联系</a></div>
                 </div>
@@ -93,7 +93,7 @@
             <div class="box__content">
                 <div class="box__content__title">微信客服</div>
                 <div class="box__content__number">
-                    <img src="http://cdn.demongao.com/static/img/wx.38921f8.jpg" alt="">
+                    <img src="http://sms.yunhushuju.com/media/kefu_main.jpg" alt="">
                 </div>
                 <div class="box__content__tips">
                     请在微信中,长按识别二维码

@@ -21,7 +21,7 @@ export default new Router({
             component: (resolve) => require(['@/pages/Home'], resolve),
             children: [
                 {
-                    path: 'drcr/:identification',
+                    path: '/index/drcr/:identification',
                     name: 'Index',
                     component: (resolve) => require(['@/pages/Index'], resolve),
                     meta: {
@@ -40,16 +40,6 @@ export default new Router({
                 }
             ]
         },
-        // 主页
-        // {
-        //     path: '/index/:identification',
-        //     name: 'Index',
-        //     component: (resolve) => require(['@/pages/Index'], resolve),
-        //     meta: {
-        //         title: '主页'
-        //     },
-        //     props: true
-        // },
         {
             path: '/applyBaseInfo',
             name: 'ApplyBaseInfo',
@@ -135,15 +125,6 @@ export default new Router({
             component: (resolve) => require(['@/pages/Protocol'], resolve),
             meta: {
                 title: '优速金融协议'
-            },
-            props: true
-        },
-        {
-            path: '/contactUs',
-            name: 'ContactUs',
-            component: (resolve) => require(['@/pages/ContactUs'], resolve),
-            meta: {
-                title: '联系客服'
             },
             props: true
         }

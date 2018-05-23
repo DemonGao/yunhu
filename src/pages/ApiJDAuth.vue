@@ -114,7 +114,7 @@
                 ref="userName"
                 v-model="userName"
                 name="userName"
-                placeholder="请输入您的淘宝账户名"
+                placeholder="请输入您的京东账户名"
                 :required="true"
                 @on-enter="nextFocus('pwd')"
             ></x-input>

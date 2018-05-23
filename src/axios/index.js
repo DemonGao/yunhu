@@ -10,7 +10,6 @@ axios.defaults.baseURL = ''
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.timeout = 1500000
 
-// const host = '/yunhu'
 const host = 'http://sms.yunhushuju.com/yunhu'
 
 
@@ -32,9 +31,6 @@ let post = ({url, data = {}, tips = false, isloadding = false}) => {
                             type: 'cancel',
                             text: '错误码:' + res.data.code + ', 错误信息: ' + res.data.msg
                         })
-                    }
-                    if (res.data.code === 100000) {
-                        window.location.reload()
                     }
                     reject(res.data.code, res.data.msg)
                 }
