@@ -81,7 +81,7 @@
                 <div class="box__content__number">
                     <div>598065453</div>
                     <div>
-                        <a href="http://wpa.qq.com/msgrd?v=3&uin=1239300678&site=qq&menu=yes">点此联系</a></div>
+                        <a href="http://wpa.qq.com/msgrd?v=3&uin=598065453&site=qq&menu=yes">点此联系</a></div>
                 </div>
             </div>
         </div>

@@ -15,7 +15,7 @@
             </transition>
             <tabbar slot="bottom">
                 <template v-for="tabbar in tabbars">
-                    <tabbar-item :selected="$route.name === tabbar.link.name" :link="tabbar.link">
+                    <tabbar-item :selected="tabbar.link.name !=='ContactUs'" :link="tabbar.link">
                         <i :class="['iconfont', tabbar.default_icon]" slot="icon"></i>
                         <i :class="['iconfont', tabbar.active_icon]" slot="icon-active"></i>
                         <span slot="label">{{tabbar.title}}</span>
@@ -56,6 +56,8 @@
                         active_icon: 'icon-tubiao313',
                         link: {
                             name: 'ContactUs',
+                            params: this.$route.params,
+                            query: this.$route.query,
                             replace: true
                         }
                     }

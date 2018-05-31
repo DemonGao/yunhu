@@ -21,7 +21,7 @@ export default new Router({
             component: (resolve) => require(['@/pages/Home'], resolve),
             children: [
                 {
-                    path: '/index/drcr/:identification',
+                    path: 'drcr/:identification',
                     name: 'Index',
                     component: (resolve) => require(['@/pages/Index'], resolve),
                     meta: {
@@ -30,40 +30,42 @@ export default new Router({
                     props: true
                 },
                 {
-                    path: 'contactUs',
+                    path: 'contactUs/:identification',
                     name: 'ContactUs',
                     component: (resolve) => require(['@/pages/ContactUs'], resolve),
                     meta: {
                         title: '联系客服'
                     },
                     props: true
+                },
+                {
+                    path: 'selectAuth/:identification',
+                    name: 'SelectAuth',
+                    component: (resolve) => require(['@/pages/SelectAuth'], resolve),
+                    meta: {
+                        title: '第三方认证'
+                    },
+                    props: true
+                },
+                {
+                    path: 'applyBaseInfo/:identification',
+                    name: 'ApplyBaseInfo',
+                    component: (resolve) => require(['@/pages/ApplyBaseInfo'], resolve),
+                    meta: {
+                        title: '基础信息'
+                    },
+                    props: true
+                },
+                {
+                    path: 'applySupplementInfo/:identification',
+                    name: 'ApplySupplementInfo',
+                    component: (resolve) => require(['@/pages/ApplySupplementInfo'], resolve),
+                    meta: {
+                        title: '补充信息'
+                    },
+                    props: true
                 }
             ]
-        },
-        {
-            path: '/applyBaseInfo',
-            name: 'ApplyBaseInfo',
-            component: (resolve) => require(['@/pages/ApplyBaseInfo'], resolve),
-            meta: {
-                title: '基础信息'
-            }
-        },
-        {
-            path: '/applySupplementInfo',
-            name: 'ApplySupplementInfo',
-            component: (resolve) => require(['@/pages/ApplySupplementInfo'], resolve),
-            meta: {
-                title: '补充信息'
-            }
-        },
-        {
-            path: '/selectAuth',
-            name: 'SelectAuth',
-            component: (resolve) => require(['@/pages/SelectAuth'], resolve),
-            meta: {
-                title: '第三方认证'
-            },
-            props: true
         },
         {
             path: '/h5AuthPage',
