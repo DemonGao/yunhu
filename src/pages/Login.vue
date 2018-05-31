@@ -77,10 +77,12 @@
             <div class="termagreement">
                 <div>
                     <check-icon :value.sync="clause" type="plain"></check-icon>
-                    <router-link :to="{name: 'Clause'}" tag="span" style="color: #f2f2f2;font-weight: 300;">隐私条款</router-link>
+                    <router-link :to="{name: 'Clause'}" tag="span" style="color: #f2f2f2;font-weight: 300;">隐私条款
+                    </router-link>
                 </div>
                 <check-icon :value.sync="protocol" type="plain"></check-icon>
-                <router-link :to="{name: 'Protocol'}" tag="span" style="color: #f2f2f2;font-weight: 300;">优速金融协议</router-link>
+                <router-link :to="{name: 'Protocol'}" tag="span" style="color: #f2f2f2;font-weight: 300;">优速金融协议
+                </router-link>
             </div>
             <box gap="30px 0 0">
                 <x-button type="confirm" :disabled="submitLoadding" :show-loading="submitLoadding"
@@ -102,7 +104,7 @@
         props: ['identification'],
         data() {
             return {
-                bg: window.COMPANY_IMG1,
+                bg: '',
                 // 用户名
                 tel: '',
                 // 密码
@@ -110,7 +112,8 @@
                 // 发送验证码等待时间
                 codeTime: 0,
                 clause: false,
-                protocol: false
+                protocol: false,
+                loading: true
             }
         },
         components: {
@@ -133,7 +136,7 @@
                     return
                 }
                 this.$axios.post({
-                    url: '/telcheck/',
+                    url: '/telcheckmodel/',
                     data: {
                         tel: this.tel
                     },
@@ -159,7 +162,7 @@
                     this.$vux.toast.text('您未同意优速金融协议', 'center')
                     return
                 }
-                this.formMixin_submit('/h5register/')
+                this.formMixin_submit('/customermodel/login/')
                     .then((result) => {
                         localStorage.setItem('yunhu!customer_id', result.customer_id)
                         const _this = this
@@ -176,7 +179,22 @@
                     })
             }
         },
+        created() {},
         mounted() {
+            if (this.$route.meta.pageMsg) {
+                this.bg = this.$route.meta.pageMsg.img1
+            } else {
+                this.$axios.post({
+                    url: `/customermodel/get_company/`,
+                    data: {
+                        identification: this.identification
+                    },
+                    isloadding: true
+                }).then(res => {
+//                    localStorage.setItem('yunhu!pageMsg', JSON.stringify(res))
+                    this.bg = res.img1
+                })
+            }
         }
     }
 </script>

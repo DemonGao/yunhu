@@ -80,10 +80,28 @@ let historyCount = history.getItem('count') * 1 || 0
 history.setItem('/', 0)
 
 router.beforeEach((to, from, next) => {
-    if (to.name === 'H5AuthPage') {
-        window.document.title = window.COMPANY_NAME + ' - ' + to.query.title + '认证'
+    let COMPANY_NAME = ''
+    let pageMsg = localStorage.getItem('yunhu!pageMsg')
+    if (pageMsg) {
+        pageMsg = JSON.parse(pageMsg)
+        COMPANY_NAME = pageMsg.name
     } else {
-        window.document.title = window.COMPANY_NAME + ' - ' + to.meta.title
+        axiosUtil.post({
+            url: `/customermodel/get_company/`,
+            data: {
+                identification: to.params.identification
+            },
+            isloadding: true
+        }).then(res => {
+            pageMsg = res
+            localStorage.setItem('yunhu!pageMsg', JSON.stringify(res))
+        })
+    }
+    to.meta.pageMsg = pageMsg
+    if (to.name === 'H5AuthPage') {
+        window.document.title = COMPANY_NAME + ' - ' + to.query.title + '认证'
+    } else {
+        window.document.title = COMPANY_NAME + ' - ' + to.meta.title
     }
     store.commit('updateLoadingStatus', {isLoading: true})
     const toIndex = history.getItem(to.path)

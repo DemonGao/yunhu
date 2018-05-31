@@ -159,7 +159,7 @@
                     <router-link :to="{name: 'Protocol'}" tag="span" style="font-weight: 300;">《优速金融协议》</router-link>
                 </marquee-item>
                 <!--<marquee-item>-->
-                    <!--用户必知 <span>《隐私协议》</span>-->
+                <!--用户必知 <span>《隐私协议》</span>-->
                 <!--</marquee-item>-->
             </marquee>
         </div>
@@ -172,7 +172,8 @@
             <!--认证过程-->
             <flexbox class="auditSteps" :gutter="0">
                 <!--基础认证-->
-                <flexbox-item class="item" @click.native="routerLink('ApplyBaseInfo', {}, {checkway: $route.query.checkway})">
+                <flexbox-item class="item"
+                              @click.native="routerLink('ApplyBaseInfo', {}, {checkway: $route.query.checkway})">
                     <i class="iconfont icon-credentials_icon"></i>
                     <p>基础信息</p>
                     <span>获取基础信息</span>
@@ -182,7 +183,8 @@
                     <i class="iconfont icon-tiaozhuandaomulu"></i>
                 </flexbox-item>
                 <!--芝麻认证-->
-                <flexbox-item class="item" @click.native="routerLink('ApplySupplementInfo', {}, {checkway: $route.query.checkway})">
+                <flexbox-item class="item"
+                              @click.native="routerLink('ApplySupplementInfo', {}, {checkway: $route.query.checkway})">
                     <i class="iconfont icon-zhimaxinyong"></i>
                     <p>补充信息</p>
                     <span>获取补充信息</span>
@@ -228,8 +230,8 @@
         data() {
             return {
                 customer_id: null,
-                bg: window.COMPANY_IMG2,
-                compnay_name: window.COMPANY_NAME
+                bg: null,
+                compnay_name: ''
             }
         },
         components: {
@@ -252,7 +254,7 @@
                         onCancel() {
                         },
                         onConfirm() {
-                            _this.routerLink('Login', {identification: this.identification}, {checkway: this.$route.query.checkway})
+                            _this.routerLink('Login', {identification: _this.identification}, {checkway: _this.$route.query.checkway})
                         }
                     })
                 }
@@ -275,6 +277,21 @@
         },
         created() {
             this.customer_id = localStorage.getItem('yunhu!customer_id')
+            if (this.$route.meta.pageMsg) {
+                this.bg = this.$route.meta.pageMsg.img2
+                this.compnay_name = this.$route.meta.pageMsg.name
+            } else {
+                this.$axios.post({
+                    url: `/customermodel/get_company/`,
+                    data: {
+                        identification: this.identification
+                    },
+                    isloadding: true
+                }).then(res => {
+                    this.bg = res.img2
+                    this.compnay_name = res.name
+                })
+            }
         },
         mounted() {
             this.checkIdentification()

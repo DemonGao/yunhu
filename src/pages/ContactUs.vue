@@ -93,7 +93,7 @@
             <div class="box__content">
                 <div class="box__content__title">微信客服</div>
                 <div class="box__content__number">
-                    <img src="http://www.yunhushuju.com/media/img/h5/kefu_main.jpg" alt="">
+                    <img src="http://sms.yunhushuju.com/media/kefu_main.jpg" alt="">
                 </div>
                 <div class="box__content__tips">
                     请在微信中,长按识别二维码
